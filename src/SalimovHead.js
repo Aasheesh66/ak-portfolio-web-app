@@ -23,6 +23,7 @@ const SalimovHead = () => {
       <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css" />
       <link rel="stylesheet" href="css/style.css" />
       <link rel="stylesheet" href="css/sidebar.css" />
+      <link rel="stylesheet" href="css/custom-sections.css" />
       {/* CSS Skin File */}
       <link rel="stylesheet" href="css/skins/professional-blue.css" />
       {/* Live Style Switcher - demo only */}

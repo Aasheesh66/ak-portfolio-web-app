@@ -22,7 +22,7 @@ const Contact = () => {
             <i className="fa fa-phone" />
             <p>
               <span className="small-text">phone</span>
-              +91-8218615729
+              +91-8218615729<br />+91-7830050890
             </p>
           </div>
           {/* CONTACT ITEM ENDS */}

@@ -78,7 +78,7 @@ const About = () => {
                 <span>
                   <span className="animated-layer fade-in-up-animation fadeInUp wow">
                     <span>Phone :</span>
-                    <span>+91-8218615729</span>
+                    <span>+91-8218615729, 7830050890</span>
                   </span>
                 </span>
               </li>
@@ -93,8 +93,8 @@ const About = () => {
               <li>
                 <span>
                   <span className="animated-layer fade-in-up-animation fadeInUp wow">
-                    <span>Pin Code :</span>
-                    <span>122001</span>
+                    <span>Certifications :</span>
+                    <span>AWS SysOps, Solutions Architect, Azure Admin</span>
                   </span>
                 </span>
               </li>

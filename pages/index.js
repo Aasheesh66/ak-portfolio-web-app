@@ -2,14 +2,12 @@ import Header from "@/src/components/Header";
 import Sidebar from "@/src/components/Sidebar";
 import ScrollBar from "@/src/components/ScrollBar";
 import About from "@/src/components/sections/About";
-import Blog from "@/src/components/sections/Blog";
-import Clients from "@/src/components/sections/Clients";
+import Resume from "@/src/components/sections/Resume";
+import Services from "@/src/components/sections/Services";
 import Contact from "@/src/components/sections/Contact";
 import Copyright from "@/src/components/sections/Copyright";
-import Facts from "@/src/components/sections/Facts";
 import Home from "@/src/components/sections/Home";
 import Portfolio from "@/src/components/sections/Portfolio";
-import Testimonials from "@/src/components/sections/Testimonials";
 import Separator from "@/src/components/Separator";
 import 'devicon/devicon.min.css';
 import { jqueryFuntion } from "@/src/utilits";
@@ -29,17 +27,13 @@ const Index = () => {
             <Home />
             <About />
             <Separator type={"down"} />
-            <Facts />
+            <Resume />
             <Separator type={"up"} />
             <Portfolio />
             <Separator type={"down"} />
-            <Testimonials />
+            <Services />
             <Separator type={"up"} />
             <Contact />
-            <Separator type={"down"} />
-            <Clients />
-            <Separator type={"up"} />
-            <Blog />
             <Separator type={"down"} />
             <Copyright />
           </main>

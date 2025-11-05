@@ -18,9 +18,9 @@ const Sidebar = () => {
           <ul>
             <li><a href="#home"><i className="fa fa-home" /> Home</a></li>
             <li><a href="#about"><i className="fa fa-user" /> About</a></li>
-            <li><a href="#portfolio"><i className="fa fa-file-text" /> Resume</a></li>
+            <li><a href="#resume"><i className="fa fa-file-text" /> Resume</a></li>
             <li><a href="#portfolio"><i className="fa fa-briefcase" /> Portfolio</a></li>
-            <li><a href="#contact"><i className="fa fa-server" /> Services</a></li>
+            <li><a href="#services"><i className="fa fa-server" /> Services</a></li>
             <li><a href="#contact"><i className="fa fa-envelope" /> Contact</a></li>
           </ul>
         </nav>

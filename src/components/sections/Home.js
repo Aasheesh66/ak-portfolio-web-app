@@ -3,9 +3,9 @@ const Home = () => {
     <section className="home image" id="home">
       <div className="home-content">
         <h1 className="home-title">Aasheesh Kumar</h1>
-        <h2 className="home-subtitle">I'm Freelancer</h2>
+        <h2 className="home-subtitle">Senior Cloud Engineer</h2>
         <p className="home-description">
-          Senior Cloud Engineer with 6.6+ Years of AWS Cloud Experience specializing in cloud infrastructure, DevOps, and automation.
+          Resilient Cloud Engineer with 6.6+ years of AWS Cloud experience. Specialized in EC2, VPC, IAM, CloudWatch, RDS, and cloud infrastructure optimization.
         </p>
         <div className="home-buttons">
           <a href="#about" className="custom-btn"><span>About Me</span></a>

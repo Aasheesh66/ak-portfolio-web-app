@@ -2588,3 +2588,67 @@ header .mobile-menu {
     padding: 20px 0 30px;
   }
 }
+
+
+/* SIMPLIFIED HOME SECTION */
+.home-content {
+  text-align: center;
+  max-width: 900px;
+  padding: 0 30px;
+}
+
+.home-title {
+  font-size: 60px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.home-subtitle {
+  font-size: 36px;
+  font-weight: 600;
+  color: #0EA5E9;
+  margin-bottom: 25px;
+}
+
+.home-description {
+  font-size: 20px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 40px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.home-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.custom-btn-outline {
+  background: transparent !important;
+  border: 2px solid #0EA5E9 !important;
+}
+
+.custom-btn-outline:hover {
+  background: #0EA5E9 !important;
+  border-color: #0EA5E9 !important;
+}
+
+@media (max-width: 768px) {
+  .home-title {
+    font-size: 36px;
+  }
+  
+  .home-subtitle {
+    font-size: 24px;
+  }
+  
+  .home-description {
+    font-size: 16px;
+  }
+}

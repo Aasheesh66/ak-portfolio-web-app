@@ -1,0 +1,130 @@
+/* =================================================================== */
+/* PROFESSIONAL BLUE - Modern Cloud Engineer Theme
+====================================================================== */
+
+/* Primary: #0EA5E9 (Sky Blue) - Trust, Technology, Cloud
+   Secondary: #3B82F6 (Bright Blue) - Innovation, Energy
+   Accent: #06B6D4 (Cyan) - Fresh, Modern
+   Highlight: #8B5CF6 (Purple) - Premium, Expertise */
+
+.home > div h1 > span:first-child span span,
+.skills > div > div span i,
+.about .infos ul li > span > span:before,
+.facts > div > div > div h3,
+.about h2 > span:first-child,
+.testimonials .quote-container > div:before,
+.contact .boxes > div > div > i,
+.timeline ol li > div > div > h4,
+.copyright ul li a:hover,
+.testimonials .quote-container > div p span.person,
+header .header-inner .menu ul li span.active,
+header .header-inner .menu ul li span:hover,
+.contact .boxes .social li a:hover,
+.copyright > div > span a,
+.mCSB_dragger_bar:after,
+header .header-inner .mail p span,
+.main-post .meta i {
+    color: #0EA5E9;
+}
+
+.home .cta,
+.nav-item,
+header .header-inner .menu ul li span:before,
+.mCSB_dragger_bar:before,
+.line:before,
+.category,
+.clients .swiper-pagination-bullet.swiper-pagination-bullet-active,
+.portfolio .single-item .swiper-pagination-bullet.swiper-pagination-bullet-active,
+.timeline ol li > div > div > span,
+.timeline ol li:not(:last-child)::after,
+.blog-page .page-item.active .page-link,
+.blog-page .page-item .page-link:hover {
+    background: linear-gradient(135deg, #0EA5E9 0%, #3B82F6 100%);
+}
+
+.custom-btn:before {
+    background: linear-gradient(135deg, #06B6D4 0%, #0EA5E9 100%);
+}
+
+.nav-item:hover {
+    background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+    box-shadow: 0 8px 24px rgba(14, 165, 233, 0.4);
+}
+
+.home>div>div h1 > span > span > span {
+    text-shadow: 8px 8px #0EA5E9, 20px 20px #1e293b;
+}
+
+/* Enhanced hover effects */
+.custom-btn:hover {
+    box-shadow: 0 12px 32px rgba(14, 165, 233, 0.3);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.skills > div > div > div span {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    transition: all 0.3s ease;
+}
+
+.skills > div > div > div span:hover {
+    background: linear-gradient(135deg, #0EA5E9 0%, #3B82F6 100%);
+    box-shadow: 0 8px 24px rgba(14, 165, 233, 0.3);
+    transform: rotate(45deg) scale(1.1);
+}
+
+.skills > div > div > div span:hover i {
+    color: #ffffff;
+}
+
+/* Card enhancements */
+.about .timeline ol li > div > div,
+.contact .boxes > div > div,
+.blog .latestposts > div,
+.testimonials .quote-container > div p {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border: 1px solid rgba(14, 165, 233, 0.1);
+    transition: all 0.3s ease;
+}
+
+.about .timeline ol li > div > div:hover,
+.contact .boxes > div > div:hover,
+.blog .latestposts > div:hover {
+    border-color: rgba(14, 165, 233, 0.4);
+    box-shadow: 0 8px 32px rgba(14, 165, 233, 0.2);
+    transform: translateY(-4px);
+}
+
+/* Accent glow effects */
+.contact .boxes > div > div > i {
+    background: linear-gradient(135deg, #0EA5E9 0%, #3B82F6 100%);
+    box-shadow: 0 4px 16px rgba(14, 165, 233, 0.4);
+}
+
+.facts > div > div > div {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+    border: 2px solid rgba(14, 165, 233, 0.2);
+    transition: all 0.3s ease;
+}
+
+.facts > div > div > div:hover {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
+    border-color: rgba(14, 165, 233, 0.5);
+    box-shadow: 0 12px 40px rgba(14, 165, 233, 0.3);
+}
+
+/* Professional accents */
+.category {
+    background: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+/* Smooth animations */
+.animated-btn span:before,
+.animated-btn span:after {
+    color: #0EA5E9;
+}
+
+.animated-btn:hover {
+    box-shadow: 0 8px 24px rgba(14, 165, 233, 0.4);
+}

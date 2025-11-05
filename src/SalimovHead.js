@@ -6,7 +6,7 @@ const SalimovHead = () => {
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       {/* Favicon / Browser Tab Icon */}
-      <link rel="icon" href="/assets/favicon.jpg" type="image/jpeg" />
+      <link rel="icon" href="/assets/vk.png" type="image/png" />
       {/* Template Google Fonts */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />

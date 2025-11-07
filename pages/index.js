@@ -12,7 +12,15 @@ import Separator from "@/src/components/Separator";
 import 'devicon/devicon.min.css';
 import { jqueryFuntion } from "@/src/utilits";
 import { Fragment, useEffect } from "react";
+import useSWR from 'swr';
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
 const Index = () => {
+  const { data: profile } = useSWR('/api/profile', fetcher);
+  const { data: projects } = useSWR('/api/projects', fetcher);
+  const { data: experiences } = useSWR('/api/experiences', fetcher);
+
   useEffect(() => {
     jqueryFuntion();
   });
@@ -20,20 +28,20 @@ const Index = () => {
   return (
     <Fragment>
       <div className="page-content">
-        <Sidebar />
+        <Sidebar profile={profile} />
         <Header />
         <div id="wrapper">
           <main className="flex-column-mobile">
-            <Home />
-            <About />
+            <Home profile={profile} />
+            <About profile={profile} experiences={experiences} />
             <Separator type={"down"} />
-            <Resume />
+            <Resume experiences={experiences} />
             <Separator type={"up"} />
-            <Portfolio />
+            <Portfolio projects={projects} />
             <Separator type={"down"} />
             <Services />
             <Separator type={"up"} />
-            <Contact />
+            <Contact profile={profile} />
             <Separator type={"down"} />
             <Copyright />
           </main>

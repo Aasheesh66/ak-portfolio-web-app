@@ -1,51 +1,86 @@
-# Aasheesh Kumar - Professional Portfolio
+# Aasheesh Kumar - Professional Portfolio with Admin Panel
 
 [![Next.js](https://img.shields.io/badge/Next.js-13.1.5-black)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-18.2.0-blue)](https://reactjs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-6.3.0-green)](https://www.mongodb.com/)
+[![NextAuth](https://img.shields.io/badge/NextAuth-4.24.5-purple)](https://next-auth.js.org/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED)](https://www.docker.com/)
 
-> Modern, responsive portfolio website for a Senior Cloud Engineer with 6.6+ years of AWS experience.
+> Production-ready portfolio website with full-featured admin panel for content management. Built for Senior Cloud Engineer with 6.6+ years of AWS experience.
 
 ## 🚀 Features
 
+### Public Portfolio
 - ✨ Modern sidebar navigation with profile section
-- 🎨 Professional blue gradient color scheme
+- 🎨 Professional gradient color scheme (Purple to Blue)
 - 📱 Fully responsive design (Desktop, Tablet, Mobile)
-- 🐳 Docker containerized for easy deployment
-- ⚡ Optimized Next.js build with standalone output
 - 🎯 Smooth animations and transitions
-- 📊 Portfolio showcase with project details
+- 📊 Dynamic portfolio showcase with project details
 - 💼 Professional experience timeline
 - 📧 Contact section with social links
+- ⚡ Real-time content updates from database
+
+### Admin Panel (NEW!)
+- 🔐 Secure authentication with NextAuth.js
+- 👤 Profile management (name, title, contact info, social links)
+- 💼 Projects CRUD operations (Create, Read, Update, Delete)
+- 📋 Experience/Education timeline management
+- 🎯 Real-time preview of changes
+- 📱 Responsive admin dashboard
+- 🎨 Modern, professional UI design
+- 🔄 Easy content management without code changes
 
 ## 🛠️ Tech Stack
 
+### Frontend
 - **Framework:** Next.js 13.1.5
 - **UI Library:** React 18.2.0
-- **Styling:** Custom CSS with gradients
+- **Data Fetching:** SWR (React Hooks for Data Fetching)
+- **Styling:** CSS-in-JS, Custom CSS with gradients
 - **Icons:** Font Awesome, Devicon
 - **Animations:** WOW.js, Swiper
+
+### Backend
+- **API:** Next.js API Routes
+- **Database:** MongoDB 6.3.0
+- **Authentication:** NextAuth.js 4.24.5
+- **Password Hashing:** bcryptjs
+
+### DevOps
 - **Containerization:** Docker
+- **Deployment:** Vercel, AWS, Azure, GCP compatible
 
 ## 📋 Prerequisites
 
 - Node.js 18+ (for local development)
-- Docker & Docker Compose (for containerized deployment)
+- MongoDB 6.0+ (local or MongoDB Atlas)
+- Docker & Docker Compose (optional, for containerized deployment)
 - npm or yarn
 
 ## 🏃 Quick Start
 
-### Local Development
+### ⚡ Fast Setup (5 Minutes)
 
 ```bash
-# Install dependencies
+# 1. Install dependencies
 npm install
 
-# Run development server
+# 2. Start MongoDB (Windows)
+net start MongoDB
+
+# 3. Seed database with sample data
+npm run seed
+
+# 4. Run development server
 npm run dev
 
-# Open http://localhost:3000
+# 5. Access the application
+# Public Portfolio: http://localhost:3000
+# Admin Panel: http://localhost:3000/admin/login
+# Default credentials: admin / admin123
 ```
+
+**📚 For detailed setup instructions, see [QUICKSTART.md](QUICKSTART.md)**
 
 ### Production Build
 
@@ -55,6 +90,8 @@ npm run build
 
 # Start production server
 npm start
+
+# Access at http://localhost:3000
 ```
 
 ### Docker Deployment (Recommended)
@@ -107,26 +144,32 @@ vikasCloud-portfolio/
 
 ## 🎨 Customization
 
-### Update Personal Information
+### 🔥 Easy Way: Use Admin Panel (Recommended)
 
-Edit the following files:
-- `src/components/sections/Home.js` - Name and title
-- `src/components/sections/About.js` - Personal details, experience
-- `src/components/sections/Contact.js` - Contact information
-- `src/components/Sidebar.js` - Profile image and social links
+1. Login to admin panel: `http://localhost:3000/admin/login`
+2. Update profile, projects, and experiences through the UI
+3. Changes reflect immediately on the public site
+4. No code changes required!
 
-### Change Color Scheme
+### 🛠️ Advanced: Direct Code Editing
+
+**Update Personal Information:**
+- Use Admin Panel (recommended)
+- Or edit MongoDB collections directly
+- Or modify seed data in `scripts/seed-data.js`
+
+**Change Color Scheme:**
 
 Modify: `public/css/skins/professional-blue.css`
 
-Primary colors:
-- `#0EA5E9` - Sky Blue (Primary)
-- `#3B82F6` - Bright Blue (Secondary)
-- `#06B6D4` - Cyan (Accent)
+Admin Panel colors (in component styles):
+- `#667eea` - Purple (Primary)
+- `#764ba2` - Deep Purple (Secondary)
+- Gradient: `linear-gradient(135deg, #667eea 0%, #764ba2 100%)`
 
-### Update Profile Image
+**Update Profile Image:**
 
-Replace: `public/assets/vk.png` with your image
+Replace: `public/assets/ak.jpeg` with your image
 
 ## 🌐 Deployment Options
 
@@ -164,10 +207,14 @@ vercel
 
 ## 🔒 Security
 
+- ✅ Secure authentication with NextAuth.js
+- ✅ Password hashing with bcryptjs
+- ✅ Protected API routes
+- ✅ Environment variables for secrets
 - ✅ Non-root Docker user
 - ✅ No sensitive data in code
-- ✅ Environment variables support
 - ✅ Production-ready build
+- ⚠️ Change default admin credentials in production!
 
 ## 📝 Scripts
 
@@ -176,9 +223,30 @@ npm run dev      # Start development server
 npm run build    # Build for production
 npm start        # Start production server
 npm run lint     # Run ESLint
+npm run seed     # Seed database with sample data
 ```
 
 ## 🐛 Troubleshooting
+
+### MongoDB Connection Error
+```bash
+# Check if MongoDB is running
+# Windows: sc query MongoDB
+# Linux: sudo systemctl status mongod
+
+# Start MongoDB
+# Windows: net start MongoDB
+# Linux: sudo systemctl start mongod
+```
+
+### Admin Login Not Working
+```bash
+# Re-run seed script
+npm run seed
+
+# Or create admin manually
+curl -X POST http://localhost:3000/api/init-admin
+```
 
 ### Port already in use
 ```bash
@@ -206,12 +274,22 @@ npm run build
 
 This project is private and proprietary.
 
+## 📚 Documentation
+
+- **[QUICKSTART.md](QUICKSTART.md)** - Fast setup guide (5 minutes)
+- **[ADMIN-SETUP.md](ADMIN-SETUP.md)** - Detailed admin panel documentation
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Production deployment guide
+
 ## 🙏 Acknowledgments
 
 - Next.js team for the amazing framework
+- NextAuth.js for authentication
+- MongoDB for the database
 - Font Awesome for icons
 - Devicon for technology icons
 
 ---
 
 **Built with ❤️ by Aasheesh Kumar | Senior Cloud Engineer**
+
+**🎉 Now with full-featured Admin Panel for easy content management!**

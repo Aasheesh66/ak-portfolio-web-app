@@ -1,17 +1,17 @@
-const Sidebar = () => {
+const Sidebar = ({ profile }) => {
   return (
     <aside className="sidebar">
       <div className="sidebar-content">
         <div className="profile-section">
-          <img src="assets/ak.jpeg" alt="Aasheesh Kumar" className="profile-img" />
-          <h2 className="profile-name">Aasheesh Kumar</h2>
-          <p className="profile-subtitle">Senior Cloud Engineer</p>
+          <img src="assets/ak.jpeg" alt={profile?.name || "Aasheesh Kumar"} className="profile-img" />
+          <h2 className="profile-name">{profile?.name || "Aasheesh Kumar"}</h2>
+          <p className="profile-subtitle">{profile?.title || "Senior Cloud Engineer"}</p>
           <div className="social-links">
-            <a href="#" aria-label="Twitter"><i className="fa-brands fa-x-twitter" /></a>
-            <a href="#" aria-label="Facebook"><i className="fa-brands fa-facebook" /></a>
-            <a href="#" aria-label="Instagram"><i className="fa-brands fa-instagram" /></a>
-            <a href="#" aria-label="Skype"><i className="fa-brands fa-skype" /></a>
-            <a href="#" aria-label="LinkedIn"><i className="fa-brands fa-linkedin" /></a>
+            <a href={profile?.social?.twitter || "#"} aria-label="Twitter"><i className="fa-brands fa-x-twitter" /></a>
+            <a href={profile?.social?.facebook || "#"} aria-label="Facebook"><i className="fa-brands fa-facebook" /></a>
+            <a href={profile?.social?.instagram || "#"} aria-label="Instagram"><i className="fa-brands fa-instagram" /></a>
+            <a href={profile?.social?.skype || "#"} aria-label="Skype"><i className="fa-brands fa-skype" /></a>
+            <a href={profile?.social?.linkedin || "#"} aria-label="LinkedIn"><i className="fa-brands fa-linkedin" /></a>
           </div>
         </div>
         <nav className="sidebar-nav">

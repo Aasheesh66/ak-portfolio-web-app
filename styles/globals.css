@@ -1,56 +1,33 @@
-@import "swiper/css";
-@import "swiper/css/navigation";
-@import "swiper/css/pagination";
-@import "swiper/css/scrollbar";
-
-.swiper-portfolio {
-  padding-right: 250px;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-@media screen and (max-width: 767px) {
-  .swiper-portfolio {
-    width: 100%;
-    padding-left: 30px;
-    padding-right: 0px;
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background: #f8f9fa;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
   }
-}
-
-#switcher,
-#showSwitcher {
-  transition: 1s all;
-}
-#switcher.open,
-#showSwitcher.open {
-  margin-left: 0;
-}
-#showSwitcher.close {
-  margin-left: -500px;
-}
-#switcher ul li {
-  margin: 0 15px 15px 0;
-}
-
-.back-btn {
-  z-index: 11111;
-  margin-left: 0px;
-  position: fixed;
-  right: 0;
-  top: 220px;
-  background: #444;
-  border-left: 0;
-  font-size: 18px;
-  display: block;
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 4px;
-  padding: 10px 16px 10px 16px;
-  cursor: pointer;
-  left: 0;
-  right: initial;
-  border-right: 0;
-  border-radius: 0 4px 4px 0;
-}
-
-.back-btn i {
-  font-size: 25px;
-  color: #fff;
 }

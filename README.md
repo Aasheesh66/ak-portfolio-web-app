@@ -49,47 +49,80 @@ npm start
 
 ## 🐳 Docker Deployment
 
+### Using Docker Compose (Easiest)
+
+```bash
+# Build and run
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop
+docker-compose down
+```
+
+### Using Docker CLI
+
 ```bash
 # Build image
 docker build -t portfolio .
 
 # Run container
-docker run -p 3000:3000 portfolio
+docker run -d -p 3000:3000 --name portfolio portfolio
 
-# Access at http://localhost:3000
+# View logs
+docker logs -f portfolio
 ```
 
-## ☁️ Google Cloud Run Deployment
+Access at: http://localhost:3000
 
-### Method 1: Direct from Source (Easiest)
+**See [DOCKER.md](DOCKER.md) for detailed Docker deployment guide**
+
+## ☁️ Google Cloud Run Deployment from GitHub
+
+### Step 1: Push to GitHub
 
 ```bash
-# Deploy directly
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+git push -u origin main
+```
+
+### Step 2: Deploy from GitHub Repository
+
+```bash
+# Login and setup
+gcloud auth login
+gcloud config set project YOUR_PROJECT_ID
+gcloud services enable run.googleapis.com cloudbuild.googleapis.com
+
+# Deploy directly from GitHub
 gcloud run deploy portfolio \
-  --source=. \
+  --source=https://github.com/YOUR_USERNAME/YOUR_REPO \
   --region=us-central1 \
   --allow-unauthenticated \
   --memory=512Mi \
   --port=3000
 ```
 
-### Method 2: From GitHub
+### Step 3: Setup Auto-Deploy (Optional)
 
 ```bash
-gcloud run deploy portfolio \
-  --source=https://github.com/YOUR_USERNAME/YOUR_REPO \
-  --region=us-central1 \
-  --allow-unauthenticated
+# Create Cloud Build trigger for automatic deployments
+gcloud builds triggers create github \
+  --repo-name=YOUR_REPO \
+  --repo-owner=YOUR_USERNAME \
+  --branch-pattern="^main$" \
+  --build-config=cloudbuild.yaml
 ```
 
-### Method 3: Using Cloud Build
+Now every push to `main` branch automatically deploys!
 
-```bash
-# Submit build
-gcloud builds submit --config=cloudbuild.yaml
-
-# Service will be automatically deployed
-```
+**See [DEPLOY.md](DEPLOY.md) for detailed guide**
 
 ## 🎨 Customization
 

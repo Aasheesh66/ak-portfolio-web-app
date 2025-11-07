@@ -1,101 +1,100 @@
-# Deployment Guide
+# 🚀 Production Deployment Guide
 
-## 🚀 Production Deployment Checklist
+## 📋 Pre-Deployment Checklist
 
-### Pre-Deployment
-- [ ] Update personal information in all sections
-- [ ] Replace profile image (public/assets/vk.png)
+- [ ] Update content via admin panel
 - [ ] Test locally: `npm run dev`
 - [ ] Build successfully: `npm run build`
-- [ ] Test Docker build: `docker-compose up`
-- [ ] Verify all links work
-- [ ] Check mobile responsiveness
+- [ ] Test Docker: `docker-compose up`
+- [ ] Generate NEXTAUTH_SECRET: `openssl rand -base64 32`
+- [ ] Setup MongoDB (Atlas or self-hosted)
+- [ ] Configure environment variables
 
-### Environment Setup
+## 🔑 Environment Variables
+
 ```bash
-# Copy environment file
-cp .env.example .env
-
-# Edit as needed
 NODE_ENV=production
 PORT=3000
+MONGODB_URI=mongodb://mongodb:27017/portfolio
+NEXTAUTH_SECRET=your-random-secret-here
+NEXTAUTH_URL=https://your-domain.com
 ```
 
 ## 🐳 Docker Deployment
 
-### Option 1: Docker Compose (Recommended)
+### Quick Start (Development)
 ```bash
-# Start
 docker-compose up -d
-
-# Check status
-docker-compose ps
-
-# View logs
-docker-compose logs -f portfolio
-
-# Stop
-docker-compose down
+docker-compose logs -f
 ```
 
-### Option 2: Docker CLI
+### Production Deployment
 ```bash
-# Build
-docker build -t aasheesh-portfolio:latest .
+# Set environment variables
+export NEXTAUTH_SECRET=$(openssl rand -base64 32)
+export NEXTAUTH_URL=https://your-domain.com
 
-# Run
-docker run -d -p 3000:3000 --name portfolio aasheesh-portfolio:latest
+# Deploy with production compose
+docker-compose -f docker-compose.prod.yml up -d
 
-# Stop
-docker stop portfolio
-docker rm portfolio
+# Seed database
+docker-compose -f docker-compose.prod.yml exec portfolio npm run seed
+
+# View logs
+docker-compose -f docker-compose.prod.yml logs -f
+```
+
+### Using Deployment Script
+```bash
+chmod +x deploy.sh
+
+# Build and deploy
+./deploy.sh all
+
+# Individual commands
+./deploy.sh build    # Build image
+./deploy.sh deploy   # Deploy with compose
+./deploy.sh seed     # Seed database
+./deploy.sh logs     # View logs
 ```
 
 ## ☁️ Cloud Deployment
 
-### AWS ECS Fargate
+### AWS ECS with Terraform
 
-1. **Create ECR Repository**
 ```bash
-aws ecr create-repository --repository-name aasheesh-portfolio
+cd terraform
+
+# Initialize
+terraform init
+
+# Plan
+terraform plan \
+  -var="vpc_id=vpc-xxx" \
+  -var="subnet_ids=[\"subnet-xxx\",\"subnet-yyy\"]" \
+  -var="mongodb_uri=mongodb+srv://user:pass@cluster.mongodb.net/portfolio" \
+  -var="nextauth_secret=$(openssl rand -base64 32)" \
+  -var="nextauth_url=https://your-domain.com"
+
+# Apply
+terraform apply
+
+# Get outputs
+terraform output ecr_repository_url
+terraform output load_balancer_dns
 ```
 
-2. **Build and Push**
+### AWS ECS Manual Deployment
+
 ```bash
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
+# Login to ECR
+aws ecr get-login-password --region us-east-1 | \
+  docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
 
-docker build -t aasheesh-portfolio .
-docker tag aasheesh-portfolio:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/aasheesh-portfolio:latest
-docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/aasheesh-portfolio:latest
-```
-
-3. **Create ECS Task Definition**
-```json
-{
-  "family": "aasheesh-portfolio",
-  "networkMode": "awsvpc",
-  "requiresCompatibilities": ["FARGATE"],
-  "cpu": "256",
-  "memory": "512",
-  "containerDefinitions": [{
-    "name": "portfolio",
-    "image": "<account-id>.dkr.ecr.us-east-1.amazonaws.com/aasheesh-portfolio:latest",
-    "portMappings": [{
-      "containerPort": 3000,
-      "protocol": "tcp"
-    }]
-  }]
-}
-```
-
-4. **Create ECS Service**
-```bash
-aws ecs create-service \
-  --cluster default \
-  --service-name aasheesh-portfolio \
-  --task-definition aasheesh-portfolio \
-  --desired-count 1 \
-  --launch-type FARGATE
+# Build and push
+docker build -f Dockerfile.prod -t portfolio:latest .
+docker tag portfolio:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/portfolio:latest
+docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/portfolio:latest
 ```
 
 ### AWS EC2
@@ -104,14 +103,23 @@ aws ecs create-service \
 # SSH to EC2
 ssh -i key.pem ec2-user@<ip>
 
-# Install Docker
+# Install Docker and Docker Compose
 sudo yum update -y
 sudo yum install docker -y
 sudo service docker start
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
-# Pull and run
-docker pull <your-image>
-docker run -d -p 80:3000 <your-image>
+# Clone repository
+git clone <your-repo>
+cd portfolio
+
+# Set environment variables
+export NEXTAUTH_SECRET=$(openssl rand -base64 32)
+export NEXTAUTH_URL=http://<ec2-public-ip>
+
+# Deploy
+docker-compose -f docker-compose.prod.yml up -d
 ```
 
 ### Azure Container Instances
@@ -132,21 +140,46 @@ az container create \
   --ports 3000
 ```
 
-### Google Cloud Run
+### Google Cloud Run (from Git Repository)
+
+**See [GCP-DEPLOYMENT.md](GCP-DEPLOYMENT.md) for detailed guide**
 
 ```bash
-# Build and push
-gcloud builds submit --tag gcr.io/<project-id>/aasheesh-portfolio
+# Quick deployment from current directory
+gcloud run deploy portfolio \
+  --source=. \
+  --region=us-central1 \
+  --allow-unauthenticated \
+  --set-env-vars="MONGODB_URI=xxx,NEXTAUTH_SECRET=xxx,NEXTAUTH_URL=xxx"
 
-# Deploy
-gcloud run deploy aasheesh-portfolio \
-  --image gcr.io/<project-id>/aasheesh-portfolio \
-  --platform managed \
-  --region us-central1 \
+# Or use automated script
+chmod +x deploy-gcp.sh
+./deploy-gcp.sh
+
+# Deploy from GitHub directly
+gcloud run deploy portfolio \
+  --source=https://github.com/YOUR_USERNAME/YOUR_REPO \
+  --region=us-central1 \
   --allow-unauthenticated
 ```
 
-### Vercel (Easiest)
+### Kubernetes
+
+```bash
+# Update k8s-deployment.yaml with your values
+
+# Apply
+kubectl apply -f k8s-deployment.yaml
+
+# Check status
+kubectl get pods -n portfolio
+kubectl get svc -n portfolio
+
+# Get external IP
+kubectl get ingress -n portfolio
+```
+
+### Vercel (with MongoDB Atlas)
 
 ```bash
 # Install Vercel CLI
@@ -155,18 +188,11 @@ npm i -g vercel
 # Deploy
 vercel
 
+# Set environment variables in Vercel dashboard:
+# MONGODB_URI, NEXTAUTH_SECRET, NEXTAUTH_URL
+
 # Production
 vercel --prod
-```
-
-### Netlify
-
-```bash
-# Install Netlify CLI
-npm i -g netlify-cli
-
-# Deploy
-netlify deploy --prod
 ```
 
 ## 🔧 Post-Deployment
@@ -249,22 +275,31 @@ docker system df
 
 ## 🔄 CI/CD Pipeline
 
-### GitHub Actions Example
-```yaml
-name: Deploy
-on:
-  push:
-    branches: [main]
+### GitHub Actions
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build and push
-        run: |
-          docker build -t aasheesh-portfolio .
-          docker push <registry>/aasheesh-portfolio
+The `.github/workflows/deploy.yml` file is already configured.
+
+**Setup:**
+1. Add secrets in GitHub repository settings:
+   - `SERVER_HOST` - Your server IP
+   - `SERVER_USER` - SSH username
+   - `SSH_PRIVATE_KEY` - SSH private key
+
+2. Push to main branch to trigger deployment
+
+### Manual CI/CD
+```bash
+# Build
+docker build -f Dockerfile.prod -t portfolio:latest .
+
+# Tag
+docker tag portfolio:latest <registry>/portfolio:latest
+
+# Push
+docker push <registry>/portfolio:latest
+
+# Deploy on server
+ssh user@server 'cd /opt/portfolio && docker-compose -f docker-compose.prod.yml pull && docker-compose -f docker-compose.prod.yml up -d'
 ```
 
 ## 🆘 Troubleshooting

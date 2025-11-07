@@ -3,29 +3,75 @@
 [![Next.js](https://img.shields.io/badge/Next.js-13.1.5-black)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-18.2.0-blue)](https://reactjs.org/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED)](https://www.docker.com/)
+[![Cloud Run](https://img.shields.io/badge/Cloud%20Run-Ready-4285F4)](https://cloud.google.com/run)
 
-> Modern, clean single-page portfolio for Senior Cloud Engineer with 6.6+ years of AWS experience.
+> Modern, clean single-page portfolio with automatic Cloud Run deployment on git push
 
 ## ✨ Features
 
-- 🎨 Modern, clean design inspired by professional portfolios
-- 📱 Fully responsive (Desktop, Tablet, Mobile)
-- ⚡ Fast and lightweight (No database required)
-- 🐳 Docker ready
-- ☁️ Google Cloud Run optimized
-- 🚀 Easy to customize
+- 🎨 Modern, clean design
+- 📱 Fully responsive
+- ⚡ Fast and lightweight
+- 🐳 Dockerized
+- ☁️ Auto-deploy on git push
+- 🔄 Revision management
 
-## 🛠️ Tech Stack
+## 🚀 Quick Deploy to Cloud Run
 
-- **Framework:** Next.js 13.1.5
-- **UI Library:** React 18.2.0
-- **Icons:** React Icons
-- **Styling:** CSS-in-JS
-- **Deployment:** Docker, Google Cloud Run
+### Step 1: Push to GitHub
 
-## 🏃 Quick Start
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+git push -u origin main
+```
 
-### Local Development
+### Step 2: Setup Auto-Deploy (One-Time)
+
+**Using Google Cloud Console (Recommended):**
+
+1. Go to https://console.cloud.google.com/run
+2. Click **CREATE SERVICE**
+3. Select **"Continuously deploy from a repository"**
+4. Click **SET UP WITH CLOUD BUILD**
+5. Connect your **GitHub** account
+6. Select your repository and branch: **main**
+7. Build Type: **Dockerfile**
+8. Region: **us-central1**
+9. Memory: **512 MiB**
+10. Port: **3000**
+11. Authentication: **Allow unauthenticated**
+12. Click **CREATE**
+
+### Step 3: Deploy (Automatic)
+
+```bash
+# Make changes to your code
+# Then push to GitHub
+
+git add .
+git commit -m "Update portfolio"
+git push
+
+# ✨ Cloud Run automatically builds and deploys new revision!
+```
+
+## 🔄 Manage Revisions
+
+```bash
+# View all revisions
+gcloud run revisions list --service=portfolio --region=us-central1
+
+# Rollback to previous revision
+gcloud run services update-traffic portfolio \
+  --to-revisions=REVISION_NAME=100 \
+  --region=us-central1
+```
+
+## 🧪 Local Development
 
 ```bash
 # Install dependencies
@@ -37,93 +83,25 @@ npm run dev
 # Open http://localhost:3000
 ```
 
-### Production Build
+## 🐳 Test with Docker
 
 ```bash
-# Build
-npm run build
-
-# Start
-npm start
-```
-
-## 🐳 Docker Deployment
-
-### Using Docker Compose (Easiest)
-
-```bash
-# Build and run
+# Using Docker Compose
 docker-compose up -d
 
-# View logs
-docker-compose logs -f
-
-# Stop
-docker-compose down
-```
-
-### Using Docker CLI
-
-```bash
-# Build image
+# Or using Docker
 docker build -t portfolio .
-
-# Run container
-docker run -d -p 3000:3000 --name portfolio portfolio
-
-# View logs
-docker logs -f portfolio
+docker run -p 3000:3000 portfolio
 ```
-
-Access at: http://localhost:3000
-
-**See [DOCKER.md](DOCKER.md) for detailed Docker deployment guide**
-
-## ☁️ Google Cloud Run Deployment from GitHub
-
-```bash
-# 1. Push to GitHub
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
-git push -u origin main
-
-# 2. Setup Google Cloud
-gcloud auth login
-gcloud config set project YOUR_PROJECT_ID
-gcloud services enable run.googleapis.com cloudbuild.googleapis.com
-
-# 3. Deploy from GitHub
-gcloud run deploy portfolio \
-  --source=https://github.com/YOUR_USERNAME/YOUR_REPO \
-  --region=us-central1 \
-  --allow-unauthenticated \
-  --memory=512Mi \
-  --port=3000
-
-# 4. Get URL
-gcloud run services describe portfolio --region=us-central1 --format='value(status.url)'
-```
-
-**Update after changes:**
-```bash
-git push
-gcloud run deploy portfolio --source=https://github.com/YOUR_USERNAME/YOUR_REPO --region=us-central1
-```
-
-**See [DEPLOY-MANUAL.md](DEPLOY-MANUAL.md) for detailed guide**
 
 ## 🎨 Customization
 
 Edit `pages/index.js` to update:
-
-- **Personal Information:** Name, title, contact details
-- **Skills:** Add/remove skills in the skills array
-- **Experience:** Update work history
-- **Projects:** Add your projects
-- **Social Links:** Update GitHub, LinkedIn, Twitter links
+- Personal information
+- Skills
+- Experience
+- Projects
+- Social links
 
 ## 📁 Project Structure
 
@@ -134,34 +112,9 @@ portfolio/
 │   └── _app.js           # App wrapper
 ├── styles/
 │   └── globals.css       # Global styles
-├── public/               # Static assets
 ├── Dockerfile            # Docker configuration
 ├── cloudbuild.yaml       # Cloud Build config
-└── package.json          # Dependencies
-```
-
-## 🌐 Deployment Options
-
-### Vercel (Easiest)
-```bash
-npm i -g vercel
-vercel
-```
-
-### AWS ECS
-```bash
-docker build -t portfolio .
-docker tag portfolio:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/portfolio
-docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/portfolio
-```
-
-### Azure Container Instances
-```bash
-az container create \
-  --resource-group portfolio-rg \
-  --name portfolio \
-  --image <registry>.azurecr.io/portfolio \
-  --ports 3000
+└── docker-compose.yml    # Local development
 ```
 
 ## 📊 Performance
@@ -171,28 +124,17 @@ az container create \
 - 🚀 First Load: < 1s
 - 📱 Mobile Optimized
 
-## 🔒 Security
-
-- ✅ No database (static content)
-- ✅ No authentication required
-- ✅ Non-root Docker user
-- ✅ Production-ready build
-
-## 📝 Scripts
-
-```bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm start        # Start production server
-npm run lint     # Run ESLint
-```
-
 ## 💰 Cost
 
 **Google Cloud Run Free Tier:**
 - 2 million requests/month
 - 360,000 GB-seconds/month
-- Your portfolio will likely stay FREE! 🎉
+- **Your portfolio will stay FREE!** 🎉
+
+## 📚 Documentation
+
+- **CLOUD-RUN-SETUP.md** - Detailed setup guide
+- **DOCKER.md** - Docker commands reference
 
 ## 📞 Contact
 
@@ -201,10 +143,8 @@ npm run lint     # Run ESLint
 - 📱 Phone: +91-8218615729
 - 📍 Location: Gurgaon, India
 
-## 📄 License
-
-This project is private and proprietary.
-
 ---
 
 **Built with ❤️ by Aasheesh Kumar | Senior Cloud Engineer**
+
+**🎉 Just push to GitHub and your portfolio automatically deploys!**

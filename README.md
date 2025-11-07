@@ -81,48 +81,39 @@ Access at: http://localhost:3000
 
 ## ☁️ Google Cloud Run Deployment from GitHub
 
-### Step 1: Push to GitHub
-
 ```bash
+# 1. Push to GitHub
 git init
 git add .
 git commit -m "Initial commit"
 git branch -M main
 git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
 git push -u origin main
-```
 
-### Step 2: Deploy from GitHub Repository
-
-```bash
-# Login and setup
+# 2. Setup Google Cloud
 gcloud auth login
 gcloud config set project YOUR_PROJECT_ID
 gcloud services enable run.googleapis.com cloudbuild.googleapis.com
 
-# Deploy directly from GitHub
+# 3. Deploy from GitHub
 gcloud run deploy portfolio \
   --source=https://github.com/YOUR_USERNAME/YOUR_REPO \
   --region=us-central1 \
   --allow-unauthenticated \
   --memory=512Mi \
   --port=3000
+
+# 4. Get URL
+gcloud run services describe portfolio --region=us-central1 --format='value(status.url)'
 ```
 
-### Step 3: Setup Auto-Deploy (Optional)
-
+**Update after changes:**
 ```bash
-# Create Cloud Build trigger for automatic deployments
-gcloud builds triggers create github \
-  --repo-name=YOUR_REPO \
-  --repo-owner=YOUR_USERNAME \
-  --branch-pattern="^main$" \
-  --build-config=cloudbuild.yaml
+git push
+gcloud run deploy portfolio --source=https://github.com/YOUR_USERNAME/YOUR_REPO --region=us-central1
 ```
 
-Now every push to `main` branch automatically deploys!
-
-**See [DEPLOY.md](DEPLOY.md) for detailed guide**
+**See [DEPLOY-MANUAL.md](DEPLOY-MANUAL.md) for detailed guide**
 
 ## 🎨 Customization
 
